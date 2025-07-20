@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'model/subjects.dart';
-import 'widgets/theme_toggle_wrapper.dart';
+import '../model/subjects.dart';
+import '../widgets/theme_toggle_wrapper.dart';
+import 'welcome_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -109,8 +110,23 @@ class _DashboardPageState extends State<DashboardPage> {
         leading: const Icon(Icons.logout, color: Colors.red),
         title: const Text('Logout', style: TextStyle(color: Colors.red)),
         onTap: () {
-          Navigator.pop(context);
-          // Add logout logic here if needed
+          // Navigator.pop(context);
+          Navigator.of(context).push(
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 800),
+            pageBuilder: (_, __, ___) => const WelcomePage(),
+            transitionsBuilder: (_, animation, __, child) {
+              final offsetAnimation = Tween<Offset>(
+                begin: const Offset(0.0, 1.0),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOutExpo,
+              ));
+              return SlideTransition(position: offsetAnimation, child: child);
+            },
+          ),
+        );
         },
       ),
     ],
@@ -127,7 +143,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Grade 9 to 12 | 2014–2016",
+                          "Grade 9 to 12 | Updated 2025",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,

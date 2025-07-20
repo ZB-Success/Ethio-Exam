@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'widgets/theme_toggle_wrapper.dart';
+import '../widgets/theme_toggle_wrapper.dart';
 
 import 'register_page.dart';
 import 'dashboard.dart';
@@ -30,8 +30,8 @@ class _LoginPageState extends State<LoginPage> {
     Future.delayed(const Duration(seconds: 2), () {
       setState(() => _isLoading = false);
 
-      if (_emailController.text == "test@example.com" &&
-          _passwordController.text == "password123") {
+      if (_emailController.text == "bruhtesheme@gmail.com" &&
+          _passwordController.text == "12345678") {
         Navigator.of(context).pushReplacement(
           PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 800),
