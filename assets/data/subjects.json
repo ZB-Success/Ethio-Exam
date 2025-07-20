@@ -1,0 +1,38 @@
+[
+  {
+    "name": "BIOLOGY",
+    "icon": "science",
+    "color": "0xFF4CAF50",
+    "locked": true
+  },
+  {
+    "name": "PHYSICS",
+    "icon": "lightbulb_outline",
+    "color": "0xFFF44336",
+    "locked": true
+  },
+  {
+    "name": "CHEMISTRY",
+    "icon": "opacity",
+    "color": "0xFF009688",
+    "locked": false
+  },
+  {
+    "name": "MATHS NATURAL",
+    "icon": "calculate",
+    "color": "0xFF9E9E9E",
+    "locked": false
+  },
+  {
+    "name": "CIVICS",
+    "icon": "gavel",
+    "color": "0xFF2196F3",
+    "locked": true
+  },
+  {
+    "name": "HISTORY",
+    "icon": "history",
+    "color": "0xFF795548",
+    "locked": false
+  }
+]

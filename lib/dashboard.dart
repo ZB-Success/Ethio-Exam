@@ -1,129 +1,168 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'model/subjects.dart';
 import 'widgets/theme_toggle_wrapper.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
-  // Subject card data
-  final List<Map<String, dynamic>> _examCategories = const [
-    {
-      'name': 'BIOLOGY',
-      'icon': Icons.science,
-      'color': Color(0xFF4CAF50),
-      'locked': true,
-    },
-    {
-      'name': 'PHYSICS',
-      'icon': Icons.lightbulb_outline,
-      'color': Color(0xFFF44336),
-      'locked': true,
-    },
-    {
-      'name': 'CHEMISTRY',
-      'icon': Icons.opacity,
-      'color': Color(0xFF009688),
-      'locked': false,
-    },
-    {
-      'name': 'MATHS NATURAL',
-      'icon': Icons.calculate,
-      'color': Color(0xFF9E9E9E),
-      'locked': false,
-    },
-    {
-      'name': 'CIVICS',
-      'icon': Icons.gavel,
-      'color': Color(0xFF2196F3),
-      'locked': true,
-    },
-    {
-      'name': 'HISTORY',
-      'icon': Icons.history,
-      'color': Color(0xFF795548),
-      'locked': false,
-    },
-  ];
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  List<Subject> _subjects = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSubjects();
+  }
+
+  Future<void> _loadSubjects() async {
+    final jsonData = await rootBundle.loadString('assets/data/subjects.json');
+    final List parsed = json.decode(jsonData);
+    setState(() {
+      _subjects = parsed.map((e) => Subject.fromJson(e)).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return ThemeToggleWrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Ethio Exam App",
+          title: Text(
+            "Dashboard",
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
               fontWeight: FontWeight.bold,
             ),
           ),
-          backgroundColor: const Color(0xFF8E24AA),
-          leading: const BackButton(color: Colors.white),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout, color: Colors.white),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ],
+          backgroundColor: const Color(0x033854),
           elevation: 0,
         ),
-        body: Column(
-          children: [
-            // Grade/year banner
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Grade 9 to 12 | 2014–2016",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).textTheme.bodyLarge!.color,
-                    ),
-                  ),
-                  Icon(Icons.arrow_drop_down, color: Theme.of(context).iconTheme.color),
-                ],
-              ),
+    drawer: Drawer(
+          child: Column(
+               children: [
+                    UserAccountsDrawerHeader(
+          decoration: const BoxDecoration(
+            color: Color(0x033854),
+          ),
+          currentAccountPicture: CircleAvatar(
+            backgroundColor: Theme.of(context).textTheme.bodyMedium?.color,
+            child: const Icon(Icons.person, size: 40, color: Color(0xFF8E24AA)),
+          ),
+          accountName: Text(
+            "Bruh W.",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.bodyMedium?.color, 
             ),
-            // Grid of subjects
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.all(16.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                  childAspectRatio: 0.9,
-                ),
-                itemCount: _examCategories.length,
-                itemBuilder: (context, index) {
-                  final category = _examCategories[index];
-                  return _buildCategoryCard(
-                    context,
-                    category['name'] as String,
-                    category['icon'] as IconData,
-                    category['color'] as Color,
-                    category['locked'] as bool,
-                  );
-                },
-              ),
+          ),
+          accountEmail: Text(
+            "bruhtesheme@gmail.com",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+            ),
+  ),
+),
+
+      Expanded(
+        child: ListView(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.dashboard),
+              title: const Text('Home'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.feedback),
+              title: const Text('Feedback'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
       ),
+      const Divider(),
+      ListTile(
+        leading: const Icon(Icons.logout, color: Colors.red),
+        title: const Text('Logout', style: TextStyle(color: Colors.red)),
+        onTap: () {
+          Navigator.pop(context);
+          // Add logout logic here if needed
+        },
+      ),
+    ],
+  ),
+),
+
+        body: _subjects.isEmpty
+            ? const Center(child: CircularProgressIndicator())
+            : Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Grade 9 to 12 | 2014–2016",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
+                          ),
+                        ),
+                        Icon(Icons.arrow_drop_down, color: Theme.of(context).iconTheme.color),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: GridView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16.0,
+                        mainAxisSpacing: 16.0,
+                        childAspectRatio: 0.9,
+                      ),
+                      itemCount: _subjects.length,
+                      itemBuilder: (context, index) {
+                        final category = _subjects[index];
+                        return _buildCategoryCard(context, category);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+      ),
     );
   }
 
-  Widget _buildCategoryCard(
-    BuildContext context,
-    String name,
-    IconData icon,
-    Color color,
-    bool locked,
-  ) {
+  Widget _buildCategoryCard(BuildContext context, Subject subject) {
     return Card(
-      color: color,
+      color: subject.color,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18.0),
       ),
@@ -131,16 +170,10 @@ class DashboardPage extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(18.0),
         onTap: () {
-          if (locked) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('$name is locked 🚫')),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Opening $name 📘')),
-            );
-            // You can add your navigation here
-          }
+          final message = subject.locked
+              ? '${subject.name} is locked 🚫'
+              : 'Opening ${subject.name} 📘';
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -150,14 +183,14 @@ class DashboardPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(icon, size: 44, color: Colors.white),
-                  if (locked)
+                  Icon(subject.icon, size: 44, color: Colors.white),
+                  if (subject.locked)
                     const Icon(Icons.lock, size: 24, color: Colors.white),
                 ],
               ),
               const Spacer(),
               Text(
-                name,
+                subject.name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
