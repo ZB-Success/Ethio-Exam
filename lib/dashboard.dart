@@ -193,8 +193,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 subject.name,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],

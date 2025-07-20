@@ -1,36 +1,36 @@
 [
   {
-    "name": "BIOLOGY",
+    "name": "Biology",
     "icon": "science",
     "color": "0xFF4CAF50",
     "locked": true
   },
   {
-    "name": "PHYSICS",
+    "name": "Physics",
     "icon": "lightbulb_outline",
     "color": "0xFFF44336",
     "locked": true
   },
   {
-    "name": "CHEMISTRY",
+    "name": "Chemistry",
     "icon": "opacity",
     "color": "0xFF009688",
     "locked": false
   },
   {
-    "name": "MATHS NATURAL",
+    "name": "Maths Natural",
     "icon": "calculate",
     "color": "0xFF9E9E9E",
     "locked": false
   },
   {
-    "name": "CIVICS",
+    "name": "Civics",
     "icon": "gavel",
     "color": "0xFF2196F3",
     "locked": true
   },
   {
-    "name": "HISTORY",
+    "name": "History",
     "icon": "history",
     "color": "0xFF795548",
     "locked": false
