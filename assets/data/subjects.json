@@ -3,13 +3,13 @@
     "name": "Biology",
     "icon": "science",
     "color": "0xFF4CAF50",
-    "locked": true
+    "locked": false
   },
   {
     "name": "Physics",
     "icon": "lightbulb_outline",
     "color": "0xFFF44336",
-    "locked": true
+    "locked": false
   },
   {
     "name": "Chemistry",

@@ -40,4 +40,4 @@ class Subject {
         return Icons.help_outline;
     }
   }
-}
+} 

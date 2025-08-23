@@ -4,10 +4,10 @@ import 'package:flutter/services.dart';
 import '../model/subjects.dart';
 import '../widgets/theme_toggle_wrapper.dart';
 import 'welcome_page.dart';
+import 'perSubjectPage.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
-
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
@@ -186,11 +186,15 @@ class _DashboardPageState extends State<DashboardPage> {
       child: InkWell(
         borderRadius: BorderRadius.circular(18.0),
         onTap: () {
-          final message = subject.locked
-              ? '${subject.name} is locked 🚫'
-              : 'Opening ${subject.name} 📘';
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-        },
+           if (subject.locked) {
+              ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('${subject.name} is locked 🚫')),
+          );
+        } else {
+          Navigator.push(context,MaterialPageRoute( builder: (context) => SubjectPage(subject: subject),),
+    );
+  }
+},
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

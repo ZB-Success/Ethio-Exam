@@ -1,0 +1,152 @@
+{
+  "Chemistry": {
+    "final": [
+
+      {
+        "question": "Which of the following is a chemical property of aluminum?",
+        "options": [
+          "Aluminum is a grey metal in color.",
+          "Aluminum liberates hydrogen gas from dilute acids like HCl and H2SO4.",
+          "Aluminum has a lower density than most metals.",
+          "Aluminum is a good conductor of electricity."
+        ],
+        "answer": "Aluminum liberates hydrogen gas from dilute acids like HCl and H2SO4.",
+        "explanation": "Al reacts with dilute acids to release H2 gas, showing a chemical property."
+      },
+      {
+        "question": "Which gas is released when zinc reacts with hydrochloric acid?",
+        "options": ["Oxygen", "Hydrogen", "Chlorine", "Carbon dioxide"],
+        "answer": "Hydrogen",
+        "explanation": "Zn + 2HCl → ZnCl2 + H2 ↑"
+      },
+      {
+        "question": "What is the pH of pure water at 25°C?",
+        "options": ["0", "7", "14", "1"],
+        "answer": "7",
+        "explanation": "Pure water is neutral with pH = 7."
+      },
+      {
+        "question": "Which element is called the 'King of Chemicals'?",
+        "options": ["H2SO4", "NaCl", "NH3", "HCl"],
+        "answer": "H2SO4",
+        "explanation": "Sulfuric acid is called the king of chemicals due to its industrial importance."
+      },
+      {
+        "question": "Which metal is liquid at room temperature?",
+        "options": ["Mercury", "Iron", "Sodium", "Lead"],
+        "answer": "Mercury",
+        "explanation": "Mercury is the only metal that is liquid at room temperature."
+      }
+    ]
+  },
+
+  "Physics": {
+    "final": [
+      {
+        "question": "What is the SI unit of Force?",
+        "options": ["Pascal", "Newton", "Joule", "Watt"],
+        "answer": "Newton",
+        "explanation": "Force = mass × acceleration, measured in Newtons (N)."
+      },
+      {
+        "question": "The speed of light in vacuum is approximately:",
+        "options": ["3×10^6 m/s", "3×10^8 m/s", "3×10^10 m/s", "3×10^5 km/s"],
+        "answer": "3×10^8 m/s",
+        "explanation": "Light travels at about 300,000 km/s (≈ 3×10^8 m/s)."
+      },
+      {
+        "question": "Which law states that pressure applied on a fluid is transmitted equally in all directions?",
+        "options": ["Archimedes' Principle", "Pascal’s Law", "Boyle’s Law", "Hooke’s Law"],
+        "answer": "Pascal’s Law",
+        "explanation": "Pascal’s Law explains hydraulic systems."
+      },
+      {
+        "question": "Which quantity is a vector?",
+        "options": ["Speed", "Mass", "Velocity", "Energy"],
+        "answer": "Velocity",
+        "explanation": "Velocity has both magnitude and direction."
+      },
+      {
+        "question": "Which device converts AC to DC?",
+        "options": ["Transformer", "Rectifier", "Generator", "Capacitor"],
+        "answer": "Rectifier",
+        "explanation": "Rectifiers are used to convert alternating current to direct current."
+      }
+    ]
+  },
+
+  "Biology": {
+    "final": [
+      {
+        "question": "Which organ is responsible for pumping blood?",
+        "options": ["Lungs", "Liver", "Heart", "Kidney"],
+        "answer": "Heart",
+        "explanation": "The heart pumps blood throughout the body."
+      },
+      {
+        "question": "The functional unit of the kidney is:",
+        "options": ["Neuron", "Nephron", "Alveolus", "Glomerulus"],
+        "answer": "Nephron",
+        "explanation": "Nephrons filter blood and form urine."
+      },
+      {
+        "question": "Which vitamin is produced in the skin by sunlight?",
+        "options": ["Vitamin A", "Vitamin B12", "Vitamin D", "Vitamin C"],
+        "answer": "Vitamin D",
+        "explanation": "UV rays help synthesize Vitamin D in the skin."
+      },
+      {
+        "question": "Which blood cells help in clotting?",
+        "options": ["Red blood cells", "White blood cells", "Platelets", "Plasma"],
+        "answer": "Platelets",
+        "explanation": "Platelets release factors that help clot formation."
+      },
+      {
+        "question": "DNA stands for:",
+        "options": [
+          "Deoxyribonucleic Acid",
+          "Deoxyribosome Acid",
+          "Dioxyribonitric Acid",
+          "None of the above"
+        ],
+        "answer": "Deoxyribonucleic Acid",
+        "explanation": "DNA is Deoxyribonucleic Acid, carrier of genetic information."
+      }
+    ]
+  },
+
+  "Math": {
+    "final": [
+      {
+        "question": "What is 12 × 8?",
+        "options": ["96", "98", "88", "108"],
+        "answer": "96",
+        "explanation": "12 multiplied by 8 equals 96."
+      },
+      {
+        "question": "The value of π is approximately:",
+        "options": ["2.12", "3.14", "3.41", "4.13"],
+        "answer": "3.14",
+        "explanation": "π ≈ 3.14159."
+      },
+      {
+        "question": "Simplify: 2x + 3x",
+        "options": ["5x", "6x", "x^2", "2x^2"],
+        "answer": "5x",
+        "explanation": "Adding like terms: 2x + 3x = 5x."
+      },
+      {
+        "question": "Solve: 2x + 3 = 7",
+        "options": ["x = 1", "x = 2", "x = 3", "x = 4"],
+        "answer": "x = 2",
+        "explanation": "2x + 3 = 7 → 2x = 4 → x = 2."
+      },
+      {
+        "question": "The square root of 144 is:",
+        "options": ["10", "11", "12", "14"],
+        "answer": "12",
+        "explanation": "12 × 12 = 144."
+      }
+    ]
+  }
+}
