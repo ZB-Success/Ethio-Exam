@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import '../model/subjects.dart';
 import 'QuestionsPage.dart';
@@ -71,8 +72,7 @@ class _SubjectPageState extends State<SubjectPage>
     if (filtered.isEmpty) {
       return const Center(child: Text("No quizzes available"));
     }
-
-    return GridView.builder(
+return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -174,4 +174,3 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 }
-

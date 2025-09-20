@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../helpers/db_helper.dart';
-import 'login_page.dart';
+import 'dart:convert';
+import '../services/apiService.dart';
+import '../services/local_storage.dart';
 import '../widgets/theme_toggle_wrapper.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _isLoading = false;
   String? _message;
 
-  void _register() async {
+  Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
     setState(() {
@@ -27,32 +29,27 @@ class _RegisterPageState extends State<RegisterPage> {
       _message = null;
     });
 
-    
-
-    final db = DBHelper();
-
     try {
-      final exists = await db.userExists(_emailCtrl.text.trim());
-
-      if (exists) {
-        setState(() {
-          _message = 'Email already registered.';
-          _isLoading = false;
-        });
-        return;
-      }
-
-      await db.registerUser(_emailCtrl.text.trim(), _passwordCtrl.text);
-
-      if (context.mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const LoginPage()),
-        );
-      }
+      final res = await ApiService.register(
+        _emailCtrl.text.trim(),
+        _passwordCtrl.text.trim(),
+      );
+    print('data response $res');
+  if (res["status"] == 200) {
+    // success
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const LoginPage()),
+   );
+} else {
+  final body = res["body"];
+  setState(() {
+    _message = body?["error"]?.toString() ?? body?["message"]?.toString() ?? "server error";
+  });
+}
     } catch (e) {
       setState(() {
-        _message = 'Something went wrong: $e';
+        _message = "Something went wrong: $e";
         _isLoading = false;
       });
     }
@@ -76,9 +73,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _emailCtrl,
                   decoration: const InputDecoration(labelText: 'Email'),
-                  validator: (val) => val == null || !val.contains('@')
-                      ? 'Enter valid email'
-                      : null,
+                  validator: (val) =>
+                      val == null || !val.contains('@') ? 'Enter valid email' : null,
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
@@ -92,8 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   controller: _confirmCtrl,
                   obscureText: true,
-                  decoration:
-                      const InputDecoration(labelText: 'Confirm Password'),
+                  decoration: const InputDecoration(labelText: 'Confirm Password'),
                   validator: (val) =>
                       val != _passwordCtrl.text ? 'Passwords don\'t match' : null,
                 ),
@@ -106,10 +101,25 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 12),
                 _isLoading
                     ? const Center(child: CircularProgressIndicator())
-                    : ElevatedButton(
-                        onPressed: _register,
-                        child: const Text('Create Account'),
-                      ),
+                    :  ElevatedButton(
+                                  onPressed: _register,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'Register Now',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600,
+                                      color:Theme.of(context).textTheme.bodyMedium?.color,
+                                    ),
+                                  ),
+                                ),
               ],
             ),
           ),

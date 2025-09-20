@@ -5,6 +5,9 @@ import '../model/subjects.dart';
 import '../widgets/theme_toggle_wrapper.dart';
 import 'welcome_page.dart';
 import 'perSubjectPage.dart';
+import 'login_page.dart';
+import 'paymentScreens/paymentMethods.dart';
+import '../services/local_Storage.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -109,25 +112,15 @@ class _DashboardPageState extends State<DashboardPage> {
       ListTile(
         leading: const Icon(Icons.logout, color: Colors.red),
         title: const Text('Logout', style: TextStyle(color: Colors.red)),
-        onTap: () {
-          // Navigator.pop(context);
-          Navigator.of(context).push(
-          PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 800),
-            pageBuilder: (_, __, ___) => const WelcomePage(),
-            transitionsBuilder: (_, animation, __, child) {
-              final offsetAnimation = Tween<Offset>(
-                begin: const Offset(0.0, 1.0),
-                end: Offset.zero,
-              ).animate(CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOutExpo,
-              ));
-              return SlideTransition(position: offsetAnimation, child: child);
-            },
-          ),
-        );
-        },
+        onTap: () async {
+          // Clear the saved user session
+            await LocalStorage.clearAuth(); // 
+         // Optional: show a confirmation
+         Navigator.of(context).push( PageRouteBuilder( transitionDuration: const Duration(milliseconds: 800), pageBuilder: (_, __, ___) => const LoginPage(), transitionsBuilder: (_, animation, __, child) { final offsetAnimation = Tween<Offset>( begin: const Offset(0.0, 1.0), end: Offset.zero, ).animate(CurvedAnimation( parent: animation, curve: Curves.easeOutExpo, )); return SlideTransition(position: offsetAnimation, child: child); }, ), );
+          ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Logged out successfully')),
+    );
+  },
       ),
     ],
   ),
@@ -190,9 +183,9 @@ class _DashboardPageState extends State<DashboardPage> {
               ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('${subject.name} is locked 🚫')),
           );
+          Navigator.push(context,MaterialPageRoute( builder: (context) => BankPaymentScreen(),),);
         } else {
-          Navigator.push(context,MaterialPageRoute( builder: (context) => SubjectPage(subject: subject),),
-    );
+          Navigator.push(context,MaterialPageRoute( builder: (context) => SubjectPage(subject: subject),),);
   }
 },
         child: Padding(

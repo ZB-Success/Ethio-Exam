@@ -9,25 +9,25 @@
     "name": "Physics",
     "icon": "lightbulb_outline",
     "color": "0xFFF44336",
-    "locked": false
+    "locked": true
   },
   {
     "name": "Chemistry",
     "icon": "opacity",
     "color": "0xFF009688",
-    "locked": false
+    "locked": true
   },
   {
     "name": "Maths(Natural)",
     "icon": "calculate",
     "color": "0xFF9E9E9E",
-    "locked": false
+    "locked": true
   },
   {
     "name": "Civics",
     "icon": "gavel",
     "color": "0xFF2196F3",
-    "locked": true
+    "locked": false
   },
   {
     "name": "History",

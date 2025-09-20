@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import '../widgets/theme_toggle_wrapper.dart';
-
+import '../services/apiService.dart';
+import '../services/local_storage.dart';
 import 'register_page.dart';
 import 'dashboard.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,40 +20,50 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   String? _errorMessage;
 
-  void _submit() {
-    if (!_formKey.currentState!.validate()) return;
+  @override
+void initState() {
+  super.initState();
+  _checkLogin();
+}
 
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() => _isLoading = false);
-
-      if (_emailController.text == "bruhtesheme@gmail.com" &&
-          _passwordController.text == "12345678") {
-        Navigator.of(context).pushReplacement(
-          PageRouteBuilder(
-            transitionDuration: const Duration(milliseconds: 800),
-            pageBuilder: (_, __, ___) => const DashboardPage(),
-            transitionsBuilder: (_, animation, __, child) {
-              final offsetAnimation = Tween<Offset>(
-                begin: const Offset(0.0, 1.0),
-                end: Offset.zero,
-              ).animate(CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeOutExpo,
-              ));
-              return SlideTransition(position: offsetAnimation, child: child);
-            },
-          ),
-        );
-      } else {
-        setState(() => _errorMessage = 'Invalid credentials.');
-      }
-    });
+void _checkLogin() async {
+  final auth = await LocalStorage.getAuth();
+  if (auth["token"] != null) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const DashboardPage()),
+    );
   }
+}
+void _submit() async {
+  if (!_formKey.currentState!.validate()) return;
+
+  setState(() {
+    _isLoading = true;
+    _errorMessage = null;
+  });
+
+  final response = await ApiService.login(
+    _emailController.text,
+    _passwordController.text,
+  );
+ print('data: $response');
+  setState(() => _isLoading = false);
+
+  if (response["status"] == 200) {
+    await LocalStorage.saveUserAuth(response["user"]["email"], _emailController.text);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const DashboardPage()),
+    );
+  } else {
+    setState(() {
+  _errorMessage = response?["error"]?.toString() 
+                 ?? response?["message"]?.toString() 
+                 ?? "Login failed! Check if you are registered.";
+});
+
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       _buildInputField(
                         controller: _emailController,
-                        label: "Email Address",
+                        label: "Email",
                         hint: "example@domain.com",
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
@@ -115,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                         obscureText: true,
                         validator: (value) {
                           if (value == null || value.length < 8) {
-                            return 'Password must be at least 8 characters';
+                            return 'Password is incorrect!';
                           }
                           return null;
                         },
@@ -154,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                                       color:Theme.of(context).textTheme.bodyMedium?.color,
                                     ),
                                   ),
-                                ),
+                                ), //bruhtesheme@gmail.com
                               ),
                       ),
                       const SizedBox(height: 30),
